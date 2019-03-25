@@ -4,7 +4,7 @@ After=network-online.target
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/bupt_ngw_login.sh
+ExecStart=/usr/local/bin/bupt_net_login.sh
 
 [Install]
 WantedBy=multi-user.target

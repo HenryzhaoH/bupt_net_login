@@ -9,7 +9,7 @@ NGW_LINE=CUC-BRAS
 
 INTERFACE=ens160
 CHECK_IP=0
-LOG_FILE=/var/log/bupt_ngw_login.log
+LOG_FILE=/var/log/bupt_net_login.log
 
 CHECK_INTERVAL=120
 MAX_FAIL_TIMES=100
