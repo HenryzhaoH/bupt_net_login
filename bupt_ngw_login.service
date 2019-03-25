@@ -1,0 +1,11 @@
+[Unit]
+Description=BUPT NGW Login
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/bupt_ngw_login.sh
+
+[Install]
+WantedBy=multi-user.target
+
