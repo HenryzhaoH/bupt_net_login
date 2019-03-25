@@ -28,3 +28,7 @@ sudo systemctl start bupt_net_login.service && sudo systemctl enable bupt_net_lo
 ## Contributing
 
 Pull requests and issues are always welcome.
+
+## TODO
+
+- This April, Windows .Net GUI version.
