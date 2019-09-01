@@ -15,8 +15,8 @@ cd bupt_net_login
 vim bupt_net_login.sh
 ```
 
-Change `USERNAME` and `PASSWORD` to your account.
-WHen using `ISP`, edit the `ISP_LINE` as well.
+Change `USERNAME` and `PASSWORD` to your account.  
+When using `ISP`, edit the `ISP_LINE` as well.
 
 ```sh
 sudo cp bupt_net_login.sh /usr/local/bin
