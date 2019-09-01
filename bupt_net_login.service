@@ -1,5 +1,5 @@
 [Unit]
-Description=BUPT NGW Login
+Description=BUPT Network Login Script
 After=network-online.target
 
 [Service]

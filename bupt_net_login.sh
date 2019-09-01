@@ -2,10 +2,10 @@
 
 USERNAME=2015000000
 PASSWORD=123456
-# Mode: NGW or 211
-MODE=NGW
-# NGW_LINE: CUC-BRAS, CMCC-BRAS, CT-BRAS, __none__ for default, [empty] for original gateway (use mode 211 instead)
-NGW_LINE=CUC-BRAS
+# Mode: ISP or CAMPUS
+MODE=ISP
+# ISP_LINE: CUC-BRAS, CMCC-BRAS, CT-BRAS, __none__ for default, [empty] for original gateway (use mode CAMPUS instead)
+ISP_LINE=CUC-BRAS
 
 INTERFACE=ens160
 CHECK_IP=0
@@ -14,33 +14,30 @@ LOG_FILE=/var/log/bupt_net_login.log
 CHECK_INTERVAL=120
 MAX_FAIL_TIMES=100
 
-SERVICE_URL_NGW=http://ngw.bupt.edu.cn
-SERVICE_URL_211=http://10.3.8.211
+SERVICE_URL_ISP=http://cu.byr.cn
+SERVICE_URL_CAMPUS=http://gw.bupt.edu.cn
 
 current_fail_time=0
 
 # Check function. Echo 1 if passed, Echo 0 if failed.
 check()
 {
-    if [ $MODE = "NGW" ]; then
-        echo `curl -s --output - $SERVICE_URL_NGW/index | grep '<div class="login-success"' | wc -l`
+    if [ $MODE = "ISP" ]; then
+        echo `curl -s --output - $SERVICE_URL_ISP/index | grep '<div class="login-success"' | wc -l`
     fi
-    if [ $MODE = "211" ]; then
-        echo `curl -s --output - $SERVICE_URL_211 | grep ';flow=' | wc -l`
+    if [ $MODE = "CAMPUS" ]; then
+        echo `curl -s --output - $SERVICE_URL_CAMPUS/index | grep '<div class="login-success"' | wc -l`
     fi
 }
 
 login()
 {
     echo "`date` - Login $MODE..." | tee -a $LOG_FILE
-    if [ $MODE = "NGW" ]; then
-        curl -s $SERVICE_URL_NGW/login --data "user=$USERNAME&pass=$PASSWORD&line=$NGW_LINE" -o /dev/null -s
-        sleep 5
-        # Logout 211 for other devices.
-        curl -s $SERVICE_URL_211/F.html
+    if [ $MODE = "ISP" ]; then
+        curl -s $SERVICE_URL_ISP/login --data "user=$USERNAME&pass=$PASSWORD&line=$ISP_LINE" -o /dev/null -s
     fi
-    if [ $MODE = "211" ]; then
-        curl -s $SERVICE_URL_211/ --data "DDDDD=$USERNAME&upass=$PASSWORD&0MKKey=" -o /dev/null -s
+    if [ $MODE = "CAMPUS" ]; then
+        curl -s $SERVICE_URL_CAMPUS/login --data "user=$USERNAME&pass=$PASSWORD" -o /dev/null -s
     fi
     if [ `check` -ne "1" ]; then
         echo "`date` - $MODE Login failed. Please check username/password." | tee -a $LOG_FILE
@@ -51,8 +48,8 @@ init()
 {
     current_ip=`ip addr show dev $INTERFACE | grep -oE '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' | head -n 1`
     echo "`date` - Mode: $MODE" | tee -a $LOG_FILE
-    if [ $MODE = "NGW" ]; then
-        echo "`date` - Using line: $NGW_LINE" | tee -a $LOG_FILE
+    if [ $MODE = "ISP" ]; then
+        echo "`date` - Using line: $ISP_LINE" | tee -a $LOG_FILE
     fi
     echo "`date` - Account: $USERNAME" | tee -a $LOG_FILE
     echo "`date` - Check interval: $CHECK_INTERVAL" | tee -a $LOG_FILE

@@ -1,6 +1,6 @@
 # BUPT Net Login script
 
-This is a simple login script for both NGW and legacy campus network.
+This is a simple login script for both ISP and legacy campus network.
 
 ## Getting Started
 
@@ -16,7 +16,7 @@ vim bupt_net_login.sh
 ```
 
 Change `USERNAME` and `PASSWORD` to your account.
-WHen using `NGW`, edit the `NGW_LINE` as well.
+WHen using `ISP`, edit the `ISP_LINE` as well.
 
 ```sh
 sudo cp bupt_net_login.sh /usr/local/bin
